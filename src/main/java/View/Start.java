@@ -4,12 +4,12 @@
  */
 package View;
 
-import Controllers.Controller;
 import Entities.Product;
-import Interfaces.IProductService;
+import Services.IProductService;
 import Repositories.ProductRepository;
 import Repositories.Repository;
 import Services.ProductService;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -18,24 +18,29 @@ import Services.ProductService;
 public class Start {
     
     private IProductService service;
+    private static final Logger log = Logger.getLogger(Start.class);
 
     public Start() {
-        ProductRepository productRepository = new ProductRepository( new Controller() );
+        ProductRepository productRepository = new ProductRepository( new Repository<Product>(Product.class) );
         this.service = new ProductService(productRepository);
     }
     
-    public void AddProduct(Product product){
-        this.service.Add(product);
+    public void Add(Product product){
+        try{
+            this.service.Add(product);
+            log.info("Add product was success");
+        }catch(Exception e){
+            log.error("Impossible to add, error: " + e.getMessage());
+        }
     }
     
     public static void main(String[] args) {
         Product productExample = new Product();
-        productExample.setName("product1");
-        productExample.setPrice(1);
-        
+        productExample.setName("product2");
+        productExample.setPrice(2);
         var start = new Start();
-        start.AddProduct(productExample);
+        start.Add(productExample);
         
-        System.out.println("this is a change");
+        System.out.println("This is a change");
     }
 }

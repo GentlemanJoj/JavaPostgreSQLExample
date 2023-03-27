@@ -5,8 +5,7 @@
 package Services;
 
 import Entities.Product;
-import Interfaces.IProductRepository;
-import Interfaces.IProductService;
+import Repositories.IProductRepository;
 
 /**
  *

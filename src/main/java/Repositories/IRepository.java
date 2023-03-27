@@ -2,15 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package Interfaces;
-
-import Entities.Product;
+package Repositories;
 
 /**
  *
  * @author Nicolás
+ * @param <T>
  */
-public interface IProductService {
+public interface IRepository<T> {
     
-    public abstract void Add(Product product);
+    void Add(T object);
+    
+    void Edit(T object);
 }

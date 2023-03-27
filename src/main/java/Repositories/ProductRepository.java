@@ -4,10 +4,7 @@
  */
 package Repositories;
 
-import Controllers.Controller;
 import Entities.Product;
-import Interfaces.IProductRepository;
-import Interfaces.IRepository;
 
 /**
  *
@@ -15,15 +12,15 @@ import Interfaces.IRepository;
  */
 public class ProductRepository implements IProductRepository {
 
-    private Controller controller;
+    private IRepository<Product> repository;
 
-    public ProductRepository(Controller controller) {
-        this.controller = controller;
+    public ProductRepository(IRepository<Product> repository) {
+        this.repository = repository;
     }
-    
+
     @Override
     public void Add(Product product) {
-        this.controller.AddProduct(product);
+        this.repository.Add(product);
     }
     
 }
