@@ -35,5 +35,7 @@ public class Start {
         
         var start = new Start();
         start.AddProduct(productExample);
+        
+        System.out.println("this is a change");
     }
 }
