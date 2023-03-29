@@ -13,4 +13,6 @@ import Entities.Product;
 public interface IProductService {
     
     void Add(Product product);
+    
+    void Edit(int id, Product product);
 }

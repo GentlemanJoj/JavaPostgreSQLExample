@@ -6,11 +6,12 @@ package Repositories;
 
 import Persistence.exceptions.NonexistentEntityException;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -20,11 +21,12 @@ import javax.persistence.Persistence;
 public class Repository<T> implements IRepository<T>, Serializable {
 
     private EntityManagerFactory emf = null;
-    private final Class<T> clazz;
+    private final Class<T> entity;
+    private static final Logger logger = Logger.getLogger(Repository.class);
 
-    public Repository(Class<T> clazz) {
+    public Repository(Class<T> entity) {
         emf = Persistence.createEntityManagerFactory("JavaPostgreSQLExamplePU");
-        this.clazz = clazz;
+        this.entity = entity;
     }
 
     public EntityManager getEntityManager() {
@@ -39,6 +41,8 @@ public class Repository<T> implements IRepository<T>, Serializable {
             em.getTransaction().begin();
             em.persist(object);
             em.getTransaction().commit();
+        } catch (Exception ex) {
+            logger.error(ex);
         } finally {
             if (em != null) {
                 em.close();
@@ -47,15 +51,35 @@ public class Repository<T> implements IRepository<T>, Serializable {
     }
 
     public T find(int id) {
-        EntityManager em = getEntityManager();
+        EntityManager em = null;
         try {
-            return em.find(this.clazz, id);
+            em = getEntityManager();
+            return em.find(this.entity, id);
         } finally {
-            em.close();
+            if (em != null) {
+                em.close();
+            }
         }
     }
 
     @Override
-    public void Edit(T object){
+    public void Edit(int id, T object) {
+        EntityManager em = null;
+        try {
+            var e = find(id);
+            if (e == null) {
+                throw new NonexistentEntityException("Item with id " + id + " no longer exists.");
+            }
+            em = getEntityManager();
+            em.getTransaction().begin();
+            object = em.merge(object);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            logger.error(ex);
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
 }

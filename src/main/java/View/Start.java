@@ -34,12 +34,30 @@ public class Start {
         }
     }
     
+    public void Edit(int id, Product product){
+        try{
+            this.service.Edit(id, product);
+            log.info("Edit product was success");
+        }catch(Exception e){
+            log.error("Impossible to edit, error: " + e.getMessage());
+        }
+    }
+    
+    
+    
     public static void main(String[] args) {
-        Product productExample = new Product();
-        productExample.setName("product2");
-        productExample.setPrice(2);
+       /*Product productExample = new Product();
+        productExample.setName("product");
+        productExample.setPrice(3);
         var start = new Start();
-        start.Add(productExample);
+        start.Add(productExample);*/
+        Product product = new Product();
+        product.setId(4);
+        product.setName("MASAKA!");
+        product.setPrice(0);
+        var start = new Start();
+        start.Edit(4, product);
+        
         
         System.out.println("This is a change");
     }

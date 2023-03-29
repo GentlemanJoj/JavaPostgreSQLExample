@@ -13,5 +13,5 @@ public interface IRepository<T> {
     
     void Add(T object);
     
-    void Edit(T object);
+    void Edit(int id, T object);
 }

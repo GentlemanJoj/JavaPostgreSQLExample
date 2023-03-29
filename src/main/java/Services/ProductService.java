@@ -23,5 +23,10 @@ public class ProductService implements IProductService {
     public void Add(Product product) {
         this.repository.Add(product);
     }
+
+    @Override
+    public void Edit(int id, Product product) {
+        this.repository.Edit(id, product);
+    }
     
 }
