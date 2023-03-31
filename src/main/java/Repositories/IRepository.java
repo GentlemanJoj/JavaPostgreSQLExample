@@ -4,6 +4,8 @@
  */
 package Repositories;
 
+import java.util.List;
+
 /**
  *
  * @author Nicolás
@@ -14,4 +16,8 @@ public interface IRepository<T> {
     void Add(T object);
     
     void Edit(int id, T object);
+    
+    void Delete(int id);
+    
+    List<T> Get();
 }

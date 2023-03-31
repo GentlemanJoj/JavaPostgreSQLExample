@@ -5,6 +5,7 @@
 package Repositories;
 
 import Entities.Product;
+import java.util.List;
 
 /**
  *
@@ -15,4 +16,8 @@ public interface IProductRepository {
     void Add(Product product);
     
     void Edit(int id, Product product);
+    
+    void Delete(int id);
+    
+    List<Product> Get();
 }

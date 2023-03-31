@@ -5,6 +5,7 @@
 package Repositories;
 
 import Entities.Product;
+import java.util.List;
 
 /**
  *
@@ -26,6 +27,16 @@ public class ProductRepository implements IProductRepository {
     @Override
     public void Edit(int id, Product product) {
         this.repository.Edit(id, product);
+    }
+
+    @Override
+    public void Delete(int id) {
+        this.repository.Delete(id);
+    }
+
+    @Override
+    public List<Product> Get() {
+        return this.repository.Get();
     }
     
 }

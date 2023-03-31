@@ -6,11 +6,12 @@ package Repositories;
 
 import Persistence.exceptions.NonexistentEntityException;
 import java.io.Serializable;
-import java.sql.SQLException;
-import java.util.logging.Level;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
 import org.apache.log4j.Logger;
 
 /**
@@ -29,7 +30,7 @@ public class Repository<T> implements IRepository<T>, Serializable {
         this.entity = entity;
     }
 
-    public EntityManager getEntityManager() {
+    private EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
@@ -41,8 +42,6 @@ public class Repository<T> implements IRepository<T>, Serializable {
             em.getTransaction().begin();
             em.persist(object);
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            logger.error(ex);
         } finally {
             if (em != null) {
                 em.close();
@@ -50,7 +49,7 @@ public class Repository<T> implements IRepository<T>, Serializable {
         }
     }
 
-    public T find(int id) {
+    private T find(int id) {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -68,18 +67,55 @@ public class Repository<T> implements IRepository<T>, Serializable {
         try {
             var e = find(id);
             if (e == null) {
-                throw new NonexistentEntityException("Item with id " + id + " no longer exists.");
+                /*throw new NonexistentEntityException("Item with id " + id + " no longer exists.");*/
+                System.out.println("Object with id " + id + " not found");
+                return;
             }
             em = getEntityManager();
             em.getTransaction().begin();
             object = em.merge(object);
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            logger.error(ex);
         } finally {
             if (em != null) {
                 em.close();
             }
+        }
+    }
+
+    @Override
+    public void Delete(int id) {
+        EntityManager em = null;
+        try {
+            var e = find(id);
+            if (e == null) {
+                /*throw new NonexistentEntityException("Item with id " + id + " no longer exists.");*/
+                System.out.println("Object with id " + id + " not found");
+                return;
+            }
+            em = getEntityManager();
+            em.getTransaction().begin();
+            T object = em.getReference(this.entity, id);
+            em.remove(object);
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+
+    @Override
+    public List<T> Get() {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            cq.select(cq.from(this.entity));
+            Query q = em.createQuery(cq);
+            return q.getResultList();
+        } finally {
+            em.close();
         }
     }
 }
