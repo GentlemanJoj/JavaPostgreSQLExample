@@ -69,13 +69,16 @@ public class Start {
     }
 
     public static void main(String[] args) {
-        /*Product productExample = new Product();
-        productExample.setId(12);
+        Product productExample = new Product();
         productExample.setName("KONO DIO DA!");
-        productExample.setPrice(2);*/
+        productExample.setPrice(1);
         var start = new Start();
-        List<Product> products = start.Get();
+        start.Add(productExample);
         
-        System.out.println(products.size());
+        logger.debug("Debug message");
+        logger.info("Info message");
+        logger.warn("Warn message");
+        logger.error("Error message");
+        logger.fatal("Fatal message");
     }
 }

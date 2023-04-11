@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration debug="true"
+                     xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+    <appender name="debugFile" class="org.apache.log4j.RollingFileAppender">
+        <param name="append" value="true" />
+        <param name="maxFileSize" value="5MB" />
+        <param name="maxBackupIndex" value="10" />
+        <param name="file" value="log/debug.log" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" 
+                   value="[%d{yyyy-MM-dd HH:mm:ss}] [ %-5p] [%c(1):%L] %m%n" />
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelMatchFilter">
+            <param name="LevelToMatch" value="debug"/>
+        </filter>
+        <filter class="org.apache.log4j.varia.DenyAllFilter"/>
+    </appender>
+    
+    <appender name="infoFile" class="org.apache.log4j.RollingFileAppender">
+        <param name="append" value="true" />
+        <param name="maxFileSize" value="5MB" />
+        <param name="maxBackupIndex" value="10" />
+        <param name="file" value="log/info.log" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" 
+                   value="[%d{yyyy-MM-dd HH:mm:ss}] [ %-5p] [%c(1):%L] %m%n" />
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelMatchFilter">
+            <param name="LevelToMatch" value="info"/>
+        </filter>
+        <filter class="org.apache.log4j.varia.DenyAllFilter"/>
+    </appender>
+    
+    <appender name="warnFile" class="org.apache.log4j.RollingFileAppender">
+        <param name="append" value="true" />
+        <param name="maxFileSize" value="5MB" />
+        <param name="maxBackupIndex" value="10" />
+        <param name="file" value="log/warn.log" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" 
+                   value="[%d{yyyy-MM-dd HH:mm:ss}] [ %-5p] [%c(1):%L] %m%n" />
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelMatchFilter">
+            <param name="LevelToMatch" value="warn"/>
+        </filter>
+        <filter class="org.apache.log4j.varia.DenyAllFilter"/>
+    </appender>
+
+    <appender name="errorFile" class="org.apache.log4j.RollingFileAppender">
+        <param name="append" value="true" />
+        <param name="maxFileSize" value="5MB" />
+        <param name="maxBackupIndex" value="10" />
+        <param name="file" value="log/error.log" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" 
+                   value="[%d{yyyy-MM-dd HH:mm:ss}] [ %-5p] [%c(1):%L] %m%n" />
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelMatchFilter">
+            <param name="LevelToMatch" value="error"/>
+        </filter>
+        <filter class="org.apache.log4j.varia.DenyAllFilter"/>
+    </appender>
+    
+    
+    <appender name="fatalFile" class="org.apache.log4j.RollingFileAppender">
+        <param name="append" value="true" />
+        <param name="maxFileSize" value="5MB" />
+        <param name="maxBackupIndex" value="10" />
+        <param name="file" value="log/fatal.log" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" 
+                   value="[%d{yyyy-MM-dd HH:mm:ss}] [ %-5p] [%c(1):%L] %m%n" />
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelMatchFilter">
+            <param name="LevelToMatch" value="fatal"/>
+        </filter>
+        <filter class="org.apache.log4j.varia.DenyAllFilter"/>
+    </appender>
+    
+    <root>
+        <level value="ALL" />
+        <appender-ref ref="debugFile" />
+        <appender-ref ref="infoFile" />
+        <appender-ref ref="warnFile" />
+        <appender-ref ref="errorFile" />
+        <appender-ref ref="fatalFile" />
+    </root>
+
+</log4j:configuration>
